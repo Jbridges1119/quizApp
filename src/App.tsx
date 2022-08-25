@@ -1,23 +1,50 @@
 import React, { useState } from "react";
-import { Difficulty, fetchQuizQuestions } from "./API";
+import { fetchQuizQuestions } from "./API";
 
 //Components
 import QuestionCard from "./components/questionCard";
+
+//Types
+import { QuestionState, Difficulty } from "./API";
+
+type AnswerObject = {
+  question: string;
+  answer: string;
+  correct: boolean;
+  correctAnswer: string;
+};
 
 const TOTAL_QUESTIONS = 10;
 
 function App() {
   const [loading, setLoading] = useState(false);
-  const [questions, setQuestions] = useState([]);
+  //QuestionState[] specifies what it should be - it cannot infer due to starting as empty array.
+  const [questions, setQuestions] = useState<QuestionState[]>([]);
   const [number, setNumber] = useState(0);
-  const [userAnswer, setUserAnswers] = useState([]);
+  const [userAnswer, setUserAnswers] = useState<AnswerObject[]>([]);
   const [score, setScrore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
-console.log(fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.EASY));
+  console.log(fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.EASY));
 
-
-  const startQuiz = async () => {};
+  const startQuiz = async () => {
+    setLoading(true);
+    setGameOver(false);
+    try {
+      const newQuestions = await fetchQuizQuestions(
+        TOTAL_QUESTIONS,
+        Difficulty.EASY
+      );
+      setQuestions(newQuestions);
+      setScrore(0);
+      setUserAnswers([]);
+      setNumber(0);
+      setLoading(false);
+    } 
+    catch (error) {
+      console.log("There was an error", error);
+    }
+  };
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {};
 
