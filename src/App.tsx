@@ -6,8 +6,11 @@ import QuestionCard from "./components/questionCard";
 
 //Types
 import { QuestionState, Difficulty } from "./API";
+//Styles
+import { GlobalStyle, Wrapper } from "./App.styles";
 
-type AnswerObject = {
+
+export type AnswerObject = {
   question: string;
   answer: string;
   correct: boolean;
@@ -25,7 +28,7 @@ function App() {
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
-  console.log(fetchQuizQuestions(TOTAL_QUESTIONS, Difficulty.EASY));
+  console.log(questions);
 
   const startQuiz = async () => {
     setLoading(true);
@@ -52,6 +55,8 @@ function App() {
       const answer = e.currentTarget.value;
       //check against correct answer
       const correct = questions[number].correct_answer === answer;
+      console.log(questions[number].correct_answer, answer, number);
+      
       //Add score if answer is correct
       if (correct) setScore(prev => prev + 1)
       //Save answer
@@ -76,13 +81,15 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>REACT QUIZ</h1>
+    <>
+    <GlobalStyle/>
+    <Wrapper>
+      <h1>QUIZ APP</h1>
       {gameOver || userAnswer.length === TOTAL_QUESTIONS ? 
       <button className="start" onClick={startQuiz}>
         Start
       </button>: null}
-      {!gameOver && <p className="score">Score:</p> }
+      {!gameOver && <p className="score">Score: {score}</p> }
       {loading && <p>Loading Questions...</p>}
       {!loading && !gameOver && 
       <QuestionCard
@@ -96,7 +103,7 @@ function App() {
       {!gameOver && !loading && userAnswer.length === number + 1 && number !== TOTAL_QUESTIONS - 1 ? <button className="next" onClick={nextQuestion}>
         Next Question
       </button> : null}
-    </div>
+      </Wrapper></>
   );
 }
 
