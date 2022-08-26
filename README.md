@@ -1,6 +1,6 @@
 # Quiz App
 
-Quiz App is a single page app built with React and TypeScript where a user can test their knowledge of video game questions. Questions are currently set to easy difficulty and 10 questions are ask. Quiz App notifies the user if they got the question wrong by highlighting their answer in red and the correct answer in greem.
+Quiz App is a single page app built with React and TypeScript where a user can test their knowledge of video game questions. Questions are currently set to easy difficulty and 10 questions are ask. Quiz App notifies the user if they got the question wrong by highlighting their answer in red and the correct answer in green.
 
 ## Final Product 
 ### Landing Page
